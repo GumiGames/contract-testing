@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Web3 from "web3";
 import { fetchContractArtifact } from "../data/ContractArtifact";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 type FunctionResult = string | number | { [key: string]: any };
 
@@ -260,15 +261,22 @@ export const ContractInteraction: React.FC<NftComponentProps> = ({
           ))}
         </div>
       </div>
-      <div className="w-1/2 pl-4 space-y-6 bg-gray-600 text-white rounded border-2 border-gray-800 overflow-auto">
-        <h2 className="text-2xl font-bold text-green-400">Event Logs:</h2>
-        {eventLogs.map((log, index) => (
-          <pre key={index} className="font-mono text-white mt-4">
-            {JSON.stringify(log, null, 2)}
-          </pre>
-        ))}
-        <div className="text-green-400 font-mono">&gt;_</div>
+      <div className="w-1/2 pl-4 space-y-6 bg-white text-black rounded border-2 border-gray-800 overflow-auto">
+    <h2 className="text-2xl font-bold text-blue-600">Event Logs:</h2>
+    {eventLogs.map((log, index) => (
+      <div key={index} className="relative bg-gray-200 rounded p-4 mt-4">
+        <pre className="font-mono text-black">
+          {JSON.stringify(log, null, 2)}
+        </pre>
+        <CopyToClipboard text={JSON.stringify(log, null, 2)}>
+          <button className="absolute top-0 right-0 bg-blue-500 text-white rounded-full h-8 w-8 flex items-center justify-center hover:bg-blue-600">
+            📋
+          </button>
+        </CopyToClipboard>
       </div>
+    ))}
+    <div className="text-blue-600 font-mono">&gt;_</div>
+  </div>
     </div>
   );
 };
