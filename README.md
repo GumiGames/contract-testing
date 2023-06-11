@@ -1,34 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Smart Contract Testing Application
+
+Welcome to our Next.js project for testing smart contracts! This application allows you to interact with smart contracts in a simple and effective way. Whether you are a seasoned blockchain developer or just beginning your journey, this project can help facilitate your smart contract testing.
 
 ## Getting Started
 
-First, run the development server:
+First, install the project dependencies:
+
+```bash
+npm install
+```
+
+Next, create a `.env.local` file in the root directory and set the `API_URL` variable. This variable is the API endpoint for fetching the smart contract artifacts. If the variable is not set, the default endpoint is `http://localhost:8000/contract`.
+
+Example:
+
+```bash
+echo "API_URL=http://my-api-url.com" > .env.local
+```
+
+Finally, start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Now you can open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Modify Contract Artifacts
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The component in `data/ContractArtifact.tsx` is responsible for fetching the contract artifacts from the API. The fetched artifact must conform to the `Contract` interface defined in the same file. Here's how the `Contract` interface looks like:
 
-## Learn More
+```typescript
+interface Contract {
+  // Database id - not needed by the app. Can be removed or set to 0 if necessary
+  id: number;
 
-To learn more about Next.js, take a look at the following resources:
+  // Contract info
+  name: string;
+  address: string;
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  // Hardhat build artifact
+  artifact: any;
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The `fetchContractArtifact` function fetches the contract artifact from the API. If you need to modify the returned object, you can do so in the `fetchContractArtifact` function. The function must return a promise that resolves to an object conforming to the `Contract` interface.
 
-## Deploy on Vercel
+Example:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```typescript
+export async function fetchContractArtifact(contractName: string): Promise<Contract> {
+  try {
+    const response = await axios.get<Contract>(`${apiHost}/${contractName}`);
+    // Modify the response.data here if necessary
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+We hope this project will help you to test your smart contracts more effectively. If you have any questions or issues, feel free to open an issue in this repository. Happy coding!

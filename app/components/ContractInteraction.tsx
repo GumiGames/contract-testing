@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Web3 from "web3";
 import { fetchContractArtifact } from "../data/ContractArtifact";
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 type FunctionResult = string | number | { [key: string]: any };
 
@@ -36,7 +36,7 @@ export const ContractInteraction: React.FC<NftComponentProps> = ({
   // Load ABI on component mount
   useEffect(() => {
     fetchContractDetails();
-    const savedParamValues = localStorage.getItem('paramValues');
+    const savedParamValues = localStorage.getItem("paramValues");
     if (savedParamValues) {
       setParamValues(JSON.parse(savedParamValues));
     }
@@ -56,7 +56,7 @@ export const ContractInteraction: React.FC<NftComponentProps> = ({
       })
       .on("error", (error: any, receipt: any) => {
         console.log(error, receipt); // log the error and receipt
-        setEventLogs((prevEventLogs) => [...prevEventLogs, error, receipt])
+        setEventLogs((prevEventLogs) => [...prevEventLogs, error, receipt]);
       });
     setSubscriptions((prevSubscriptions) => ({
       ...prevSubscriptions,
@@ -120,9 +120,9 @@ export const ContractInteraction: React.FC<NftComponentProps> = ({
         [paramName]: event.target.value,
       },
     };
-  
+
     setParamValues(updatedParamValues);
-    localStorage.setItem('paramValues', JSON.stringify(updatedParamValues));
+    localStorage.setItem("paramValues", JSON.stringify(updatedParamValues));
   };
 
   const handleFunctionCall = async (funcName: string) => {
@@ -171,7 +171,7 @@ export const ContractInteraction: React.FC<NftComponentProps> = ({
       setEventLogs((prevEventLogs) => [...prevEventLogs, receipt]);
     }
   }
-  
+
   const fetchContractDetails = async () => {
     const contract = await fetchContractArtifact(contractName);
     setArtifact(contract.artifact);
@@ -261,22 +261,23 @@ export const ContractInteraction: React.FC<NftComponentProps> = ({
           ))}
         </div>
       </div>
+
       <div className="w-1/2 pl-4 space-y-6 bg-white text-black rounded border-2 border-gray-800 overflow-auto">
-    <h2 className="text-2xl font-bold text-blue-600">Event Logs:</h2>
-    {eventLogs.map((log, index) => (
-      <div key={index} className="relative bg-gray-200 rounded p-4 mt-4">
-        <pre className="font-mono text-black">
-          {JSON.stringify(log, null, 2)}
-        </pre>
-        <CopyToClipboard text={JSON.stringify(log, null, 2)}>
-          <button className="absolute top-0 right-0 bg-blue-500 text-white rounded-full h-8 w-8 flex items-center justify-center hover:bg-blue-600">
-            📋
-          </button>
-        </CopyToClipboard>
+        <h2 className="text-2xl font-bold text-blue-600">Event Logs:</h2>
+        {eventLogs.map((log, index) => (
+          <div key={index} className="relative bg-gray-200 rounded p-4 mt-4">
+            <pre className="font-mono text-black">
+              {JSON.stringify(log, null, 2)}
+            </pre>
+            <CopyToClipboard text={JSON.stringify(log, null, 2)}>
+              <button className="absolute top-1 right-1 bg-blue-500 text-white rounded-full h-8 w-8 flex items-center justify-center hover:bg-blue-600">
+                📋
+              </button>
+            </CopyToClipboard>
+          </div>
+        ))}
+        <div className="text-blue-600 font-mono">&gt;_</div>
       </div>
-    ))}
-    <div className="text-blue-600 font-mono">&gt;_</div>
-  </div>
     </div>
   );
 };
