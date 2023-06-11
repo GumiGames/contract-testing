@@ -2,6 +2,9 @@
 
 Welcome to our Next.js project for testing smart contracts! This application allows you to interact with smart contracts in a simple and effective way. Whether you are a seasoned blockchain developer or just beginning your journey, this project can help facilitate your smart contract testing.
 
+## Browser Support
+Google Chrome
+
 ## Getting Started
 
 First, install the project dependencies:

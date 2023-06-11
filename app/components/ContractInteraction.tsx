@@ -31,7 +31,7 @@ export const ContractInteraction: React.FC<NftComponentProps> = ({
   const [paramValues, setParamValues] = useState({});
   const [subscriptions, setSubscriptions] = useState({});
 
-  const web3 = new Web3((window as any).ethereum);
+  const web3 = new Web3(window.ethereum);
 
   // Load ABI on component mount
   useEffect(() => {
@@ -138,7 +138,7 @@ export const ContractInteraction: React.FC<NftComponentProps> = ({
       console.log('Account is not set');
       return;
     }
-    
+
     const contract = web3Contract();
     const functionAbi = functions.find((func) => func.name === functionName);
     if (!functionAbi) {
