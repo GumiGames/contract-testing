@@ -13,7 +13,7 @@ First, install the project dependencies:
 npm install
 ```
 
-Next, create a `.env.local` file in the root directory and set the `API_URL` variable. This variable is the API endpoint for fetching the smart contract artifacts. If the variable is not set, the default endpoint is `http://localhost:8000/contract`.
+Next, create a `.env` file in the root directory and set the `API_URL` variable. This variable is the API endpoint for fetching the smart contract artifacts. If the variable is not set, the default endpoint is `http://localhost:8000/contract`.
 
 Example:
 
