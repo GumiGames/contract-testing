@@ -60,5 +60,8 @@ export async function fetchContractArtifact(contractName: string): Promise<Contr
   }
 }
 ```
+## UI View
+![UI](view.png)
+
 
 We hope this project will help you to test your smart contracts more effectively. If you have any questions or issues, feel free to open an issue in this repository. Happy coding!

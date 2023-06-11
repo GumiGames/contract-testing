@@ -134,6 +134,11 @@ export const ContractInteraction: React.FC<NftComponentProps> = ({
     functionName: string,
     params: any
   ): Promise<void> {
+    if (!account) {
+      console.log('Account is not set');
+      return;
+    }
+    
     const contract = web3Contract();
     const functionAbi = functions.find((func) => func.name === functionName);
     if (!functionAbi) {
